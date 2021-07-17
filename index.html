@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+  <title>Cadastro de Funcionário</title>
+</head>
+
+<body class="corpo">
+  <div class="pai">
+    <div class="filho">
+
+      <h2>Cadastro de Funcionário</h1>
+        <div>
+
+
+          <div class="mb-3" id="nome">
+            <label for="Nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="Nom">
+          </div>
+
+          <div class="mb-3" id="ema">
+            <label for="Email" class="form-label">Endereço de Email</label>
+            <input type="email" class="form-control" id="emai" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">Por favor, Digite atentamente esse campo!!</div>
+
+            <div class="mb-3" id="cpf">
+              <label for="CPF" class="form-label">CPF</label>
+              <input type="text" class="form-control" id="Cpf" >
+            </div>
+
+            <div class="mb-3" id="endereco">
+              <label for="Endereco" class="form-label">Endereço</label>
+              <input type="text" class="form-control" id="end">
+            </div>
+
+            <div class="mb-3" id="data">
+              <label for="Data" class="form-label">Data de Nascimento</label>
+              <input type="date" class="form-control" id="Dat">
+            </div>
+
+            <div class="mb-3" id="telefone">
+
+              <label for="Tel" class="form-label">Telefone</label>
+              <input type="text" class="form-control" id="Tele">
+            </div>
+
+            <div class="mb-3 form-check">
+
+              <button onclick="cadastrar()" class="btn btn-primary">Cadastrar</button>
+            </div>
+
+            <div class="mb-3 form-check">
+              <button class="btn btn-primary"> <a class="btn btn-primary" href="tabela.html">Tabela de Funcionários
+                </a></button>
+            </div>
+
+
+            </div>
+
+            
+        </div>
+
+    </div>
+  </div>
+
+  
+  <script>
+     function cadastrar() {
+  var nomeFunc = document.getElementById("Nom").value;
+  var emailFunc = document.getElementById("emai").value;
+  var cpfFunc = document.getElementById("Cpf").value;
+  var enderecoFunc = document.getElementById("end").value;
+  var dataFunc = document.getElementById("Dat").value;
+  var telefoneFunc = document.getElementById("Tele").value;
+
+      if (nomeFunc==""||emailFunc==""||cpfFunc==""||enderecoFunc==""||dataFunc==""||telefoneFunc=="") {
+        alert("Algum Campo está em branco");
+      }
+
+      else if (isNaN(telefoneFunc) || telefoneFunc.length <= 8 || telefoneFunc.length >= 13) {
+    alert("telefone inválido");
+      }
+
+      else if (isNaN(cpfFunc) || cpfFunc.length != 11) {
+    alert("cpf inválido");
+      }
+
+      else {
+        let url = 'https://api.sheety.co/b87889431ad07129fc1f4dd2ea8f0d9b/funcionarios/lista';
+  let body = {
+    lista: {
+          "nome": document.getElementById("Nom").value,
+          "cpf": document.getElementById("Cpf").value,
+          "telefone": document.getElementById("Tele").value,
+          "endereco": document.getElementById("end").value,
+          "email": document.getElementById("emai").value,
+          "nascimento": document.getElementById("Dat").value   
+        }
+  }
+  fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: {'Content-Type':'application/json'}
+  })
+  .then((response) => response.json())
+  .then(json => {
+    // Do something with object    
+    console.log(json.lista);
+  });
+      }
+     
+}
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"
+    integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
+    integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
